@@ -2,10 +2,9 @@
   {
     "name": "AI News",
     "description": "News about AI research, products and companies, with focus on safety and alignment",
-    "keywords": ["AI alignment", "OpenAI", "Anthropic", "Google DeepMind"],
+    "keywords": ["AI alignment", "AI safety","OpenAI", "Anthropic", "Google DeepMind"],
     "trusted_sources": [
-      "https://feeds.feedburner.com/venturebeat/SZYF",
-      "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+      "https://80000hours.org/latest/feed"
     ]
   }
 ]

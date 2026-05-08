@@ -2,6 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 from fetcher import load_interests
 from curator import curate_interest
 from newsletter import assemble_newsletter
+from email_sender import send_newsletter
 from state import save_last_run
 
 
@@ -12,7 +13,6 @@ def run_curator():
     with ThreadPoolExecutor() as executor:
         results = list(executor.map(curate_interest, interests))
 
-    # Pair each section with its interest name, filter out None results
     sections = {
         interest["name"]: section
         for interest, section in zip(interests, results)
@@ -26,10 +26,7 @@ def run_curator():
     print(f"Curated {len(sections)} sections, assembling newsletter...")
     newsletter = assemble_newsletter(sections)
 
-    print("\n========== NEWSLETTER ==========\n")
-    print(newsletter)
-    print("\n================================\n")
-
+    send_newsletter(newsletter)
     save_last_run()
 
 

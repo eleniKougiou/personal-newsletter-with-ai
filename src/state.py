@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-STATE_FILE = "config/state.json"
+STATE_FILE = "../config/state.json"
 
 def get_last_run() -> datetime:
     if os.getenv("DEV_MODE", "false").lower() == "true":

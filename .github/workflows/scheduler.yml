@@ -1,0 +1,48 @@
+name: Daily Newsletter
+
+# Runs every day at 17:00 UTC
+# To change the time, update the cron expression below
+
+on:
+  schedule:
+    - cron: '0 17 * * *'
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run newsletter curator
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          EMAIL_SENDER_APP_PASSWORD: ${{ secrets.EMAIL_SENDER_APP_PASSWORD }}
+          EMAIL_SMTP_HOST: ${{ secrets.EMAIL_SMTP_HOST }}
+          EMAIL_SMTP_PORT: ${{ secrets.EMAIL_SMTP_PORT }}
+          DEV_MODE: 'false'
+        run: |
+          cd src
+          python main.py
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add config/state.json
+          git diff --staged --quiet || git commit -m "Update state after latest newsletter run [$(date +'%Y-%m-%d')]"
+          git push

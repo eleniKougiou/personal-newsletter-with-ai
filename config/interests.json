@@ -1,0 +1,10 @@
+[
+  {
+    "name": "AI News",
+    "description": "News about AI research, products and companies, with focus on safety and alignment",
+    "keywords": ["AI alignment", "AI safety","OpenAI", "Anthropic", "Google DeepMind"],
+    "trusted_sources": [
+      "https://80000hours.org/latest/feed"
+    ]
+  }
+]

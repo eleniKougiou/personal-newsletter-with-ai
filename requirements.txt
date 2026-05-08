@@ -1,0 +1,6 @@
+feedparser
+python-dotenv
+openai
+pydantic
+requests
+trafilatura

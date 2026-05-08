@@ -24,3 +24,23 @@ At the end, list the sources you referenced.
 
 Articles:
 {articles}"""
+
+
+TLDR_PROMPT = """You are writing the opening of a personal daily newsletter.
+
+Below are the sections of today's newsletter, each covering a different topic of interest.
+
+Write a short, engaging TL;DR (3-5 sentences max) that captures the most important or interesting things happening today across all topics. Write it like a smart friend giving you the highlights before you dive in.
+
+Sections:
+{sections}"""
+
+
+TAKEAWAY_PROMPT = """You are writing the closing of a personal daily newsletter.
+
+Below are the sections of today's newsletter, each covering a different topic of interest.
+
+Write a short closing thought, takeaway or reflection (2-3 sentences) that ties the day's news together. End with a relevant quote if one comes to mind naturally.
+
+Sections:
+{sections}"""

@@ -1,29 +1,36 @@
 from concurrent.futures import ThreadPoolExecutor
 from fetcher import load_interests
 from curator import curate_interest
+from newsletter import assemble_newsletter
 from state import save_last_run
 
 
 def run_curator():
     interests = load_interests()
 
-    # Run curation for each interest in parallel
+    print("Starting curation for all interests...")
     with ThreadPoolExecutor() as executor:
-        sections = list(executor.map(curate_interest, interests))
+        results = list(executor.map(curate_interest, interests))
 
-    # Filter out None results (interests with no news today)
-    sections = [s for s in sections if s]
+    # Pair each section with its interest name, filter out None results
+    sections = {
+        interest["name"]: section
+        for interest, section in zip(interests, results)
+        if section is not None
+    }
 
     if not sections:
         print("No news today!")
         return
 
-    for section in sections:
-        print(section)
-        print("\n---\n")
+    print(f"Curated {len(sections)} sections, assembling newsletter...")
+    newsletter = assemble_newsletter(sections)
+
+    print("\n========== NEWSLETTER ==========\n")
+    print(newsletter)
+    print("\n================================\n")
 
     save_last_run()
-
 
 
 if __name__ == "__main__":

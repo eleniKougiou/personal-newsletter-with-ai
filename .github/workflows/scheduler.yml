@@ -26,15 +26,15 @@ jobs:
 
       - name: Run newsletter curator
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_MODEL: ${{ secrets.LLM_MODEL }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
           EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_SENDER_APP_PASSWORD: ${{ secrets.EMAIL_SENDER_APP_PASSWORD }}
-          EMAIL_SMTP_HOST: ${{ secrets.EMAIL_SMTP_HOST }}
-          EMAIL_SMTP_PORT: ${{ secrets.EMAIL_SMTP_PORT }}
-          DEV_MODE: 'false'
+          EMAIL_SMTP_HOST: 'smtp.gmail.com'
+          EMAIL_SMTP_PORT: '465'
+          DEV_MODE: ${{ vars.DEV_MODE }}
         run: |
           cd src
           python main.py

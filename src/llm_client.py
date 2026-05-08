@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=False)
 
 def get_llm_client():
     api_key = os.getenv("LLM_API_KEY")

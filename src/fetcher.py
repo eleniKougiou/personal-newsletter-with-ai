@@ -1,34 +1,53 @@
-import feedparser
+import requests
 import json
-from datetime import datetime, timezone
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from llm_client import get_llm_client, get_model
+from prompts import ARTICLE_EXTRACTION_PROMPT
 import trafilatura
 
 
-def fetch_articles(interest: dict, since: datetime) -> list[dict]:
+def fetch_articles(interest: dict) -> list[dict]:
+    client = get_llm_client()
+    model = get_model()
     articles = []
 
     for url in interest.get("trusted_sources", []):
-        feed = feedparser.parse(url)
-        count = 0
+        try:
+            print(f"[Fetcher] Fetching {url}...")
+            response = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            html = response.text[:15000]
 
-        for entry in feed.entries:
-            if count >= 20:
-                break
+            print(f"[Fetcher] Extracting articles from {url}...")
+            extraction_response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": ARTICLE_EXTRACTION_PROMPT.format(html=html)}]
+            )
 
-            published = entry.get("published_parsed")
-            if published:
-                published_dt = datetime(*published[:6], tzinfo=timezone.utc)
-                if published_dt <= since:
-                    continue
+            raw = extraction_response.choices[0].message.content
+            if "<think>" in raw:
+                raw = raw.split("</think>")[-1].strip()
 
-            articles.append({
-                "title": entry.get("title", ""),
-                "summary": entry.get("summary", ""),
-                "link": entry.get("link", ""),
-                "source": feed.feed.get("title", url),
-                "published": entry.get("published", "")
-            })
-            count += 1
+            import re
+            raw = re.sub(r"```[a-z]*\n?", "", raw).strip()
+            raw = raw.replace("```", "").strip()
+
+            try:
+                data = json.loads(raw)
+                extracted = data.get("articles", [])
+                print(f"[Fetcher] Raw extracted articles: {extracted[:3]}")
+                for item in extracted:
+                    articles.append({
+                        "title": item.get("title", ""),
+                        "link": urljoin(url, item.get("url", "")),
+                        "source": url
+                    })
+                print(f"[Fetcher] Extracted {len(extracted)} articles from {url}")
+            except json.JSONDecodeError:
+                print(f"[Fetcher] Failed to parse articles from {url}")
+
+        except Exception as e:
+            print(f"[Fetcher] Failed to fetch {url}: {e}")
 
     return articles
 

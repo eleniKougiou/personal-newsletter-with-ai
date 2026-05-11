@@ -32,7 +32,7 @@ def curate_interest(interest: dict) -> Optional[str]:
     since = get_last_run()
 
     print(f"[{interest['name']}] Fetching articles since {since}...")
-    articles = fetch_articles(interest, since)
+    articles = fetch_articles(interest)
     print(f"[{interest['name']}] Found {len(articles)} articles")
 
     if not articles:
@@ -40,7 +40,7 @@ def curate_interest(interest: dict) -> Optional[str]:
         return None
 
     articles_text = "\n\n".join([
-        f"URL: {a['link']}\nTitle: {a['title']}\nSummary: {a['summary']}"
+        f"URL: {a['link']}\nTitle: {a['title']}"
         for a in articles
     ])
 
@@ -51,6 +51,7 @@ def curate_interest(interest: dict) -> Optional[str]:
             interest_name=interest["name"],
             interest_description=interest.get("description", ""),
             keywords=", ".join(interest.get("keywords", [])),
+            since_date=since.strftime("%Y-%m-%d"),
             articles=articles_text
         )}]
     )
@@ -58,6 +59,7 @@ def curate_interest(interest: dict) -> Optional[str]:
     raw = pass1_response.choices[0].message.content
     selected_urls = parse_urls(raw)
     print(f"[{interest['name']}] Selected URLs: {selected_urls}")
+    print(f"[{interest['name']}] Raw selection response: {raw}")
 
     if not selected_urls:
         print(f"[{interest['name']}] No URLs selected, skipping")
@@ -92,6 +94,10 @@ def curate_interest(interest: dict) -> Optional[str]:
     raw2 = pass2_response.choices[0].message.content
     if "<think>" in raw2:
         raw2 = raw2.split("</think>")[-1].strip()
+
+    if raw2.strip() == "NOTHING_TODAY":
+        print(f"[{interest['name']}] Nothing significant, skipping")
+        return None
 
     print(f"[{interest['name']}] Done!")
     return raw2

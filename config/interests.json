@@ -4,10 +4,9 @@
     "description": "Big developments in tech and science worth knowing about. Think major product launches, breakthroughs, or moves from companies like Google, Microsoft, Nvidia, Apple. Also notable scientific discoveries or research that made headlines. Skip minor updates and routine announcements.",
     "keywords": ["Google", "Microsoft", "Nvidia", "Apple", "Meta", "discovery", "breakthrough", "research", "launch", "quantum", "space", "biology", "physics"],
     "trusted_sources": [
-      "https://www.technologyreview.com",
-      "https://techcrunch.com",
-      "https://www.theverge.com",
-      "https://arstechnica.com",
+      "https://techcrunch.com/feed/",
+      "https://www.theverge.com/rss/index.xml",
+      "https://arstechnica.com/feed/",
       "https://deepmind.google/blog/",
       "https://news.microsoft.com",
       "https://nvidianews.nvidia.com/news"
@@ -19,9 +18,7 @@
     "keywords": ["AI alignment", "AI safety", "interpretability", "RLHF", "reward hacking", "mesa-optimization", "corrigibility", "AI governance", "existential risk"],
     "trusted_sources": [
       "https://80000hours.org/latest",
-      "https://www.anthropic.com/research",
-      "https://www.lesswrong.com/allPosts",
-      "https://www.alignmentforum.org/allPosts"
+      "https://www.anthropic.com/research"
     ]
   },
   {
@@ -29,7 +26,6 @@
     "description": "General news from Greece covering politics, economy, and society. Write the section in English.",
     "keywords": ["Greece", "Greek government", "Greek economy", "Athens", "Mitsotakis", "ΝΔ", "ΣΥΡΙΖΑ", "οικονομία"],
     "trusted_sources": [
-      "https://www.ekathimerini.com",
       "https://www.iefimerida.gr",
       "https://www.in.gr/greece"
     ]
@@ -40,10 +36,7 @@
     "keywords": ["S&P 500", "ETF", "Federal Reserve", "interest rates", "inflation", "GDP", "earnings", "recession", "economic outlook"],
     "trusted_sources": [
       "https://apnews.com/business",
-      "https://www.reuters.com/markets/",
-      "https://finance.yahoo.com/topic/stock-market-news/",
-      "https://www.marketwatch.com/latest-news",
-      "https://www.cnbc.com/markets/"
+      "https://finance.yahoo.com/topic/stock-market-news/"
     ]
   }
 ]

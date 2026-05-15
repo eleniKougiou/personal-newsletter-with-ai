@@ -16,7 +16,9 @@ def fetch_articles(interest: dict) -> list[dict]:
         try:
             print(f"[Fetcher] Fetching {url}...")
             response = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
-            html = response.text[:15000]
+            html = response.text[:40000]
+
+            print(f"[Fetcher] HTML length for {url}: {len(html)} chars")
 
             print(f"[Fetcher] Extracting articles from {url}...")
             extraction_response = client.chat.completions.create(

@@ -1,5 +1,6 @@
 import requests
 import json
+import re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from llm_client import get_llm_client, get_model
@@ -16,21 +17,25 @@ def fetch_articles(interest: dict) -> list[dict]:
         try:
             print(f"[Fetcher] Fetching {url}...")
             response = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
-            html = response.text[:40000]
 
-            print(f"[Fetcher] HTML length for {url}: {len(html)} chars")
+            soup = BeautifulSoup(response.text, "html.parser")
+            for tag in soup(["script", "style", "nav", "footer", "header", "meta", "link", "svg", "img"]):
+                tag.decompose()
+            content = str(soup)[:40000]
 
+            print(f"[Fetcher] Content length for {url}: {len(content)} chars")
             print(f"[Fetcher] Extracting articles from {url}...")
+
             extraction_response = client.chat.completions.create(
                 model=model,
-                messages=[{"role": "user", "content": ARTICLE_EXTRACTION_PROMPT.format(html=html)}]
+                messages=[{"role": "user", "content": ARTICLE_EXTRACTION_PROMPT.format(html=content)}]
             )
 
             raw = extraction_response.choices[0].message.content
+            print(f"[Fetcher] Raw extraction response for {url}: {raw[:500]}")
             if "<think>" in raw:
                 raw = raw.split("</think>")[-1].strip()
 
-            import re
             raw = re.sub(r"```[a-z]*\n?", "", raw).strip()
             raw = raw.replace("```", "").strip()
 

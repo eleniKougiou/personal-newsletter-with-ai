@@ -35,7 +35,7 @@
     "description": "Market news and economic developments. Focus on things that could meaningfully affect global markets — Fed decisions, inflation, major earnings, geopolitical developments, sector trends. Skip day-trading noise and crypto.",
     "keywords": ["S&P 500", "ETF", "Federal Reserve", "interest rates", "inflation", "GDP", "earnings", "recession", "economic outlook"],
     "trusted_sources": [
-      "https://apnews.com/business",
+      "https://feeds.reuters.com/reuters/businessNews",
       "https://finance.yahoo.com/topic/stock-market-news/"
     ]
   }

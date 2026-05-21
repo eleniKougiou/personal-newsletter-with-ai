@@ -18,7 +18,8 @@
     "keywords": ["AI alignment", "AI safety", "interpretability", "RLHF", "reward hacking", "mesa-optimization", "corrigibility", "AI governance", "existential risk"],
     "trusted_sources": [
       "https://80000hours.org/latest",
-      "https://www.anthropic.com/research"
+      "https://www.anthropic.com/research",
+      "https://blog.redwoodresearch.org/"
     ]
   },
   {

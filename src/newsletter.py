@@ -1,10 +1,7 @@
 from llm_client import get_llm_client, get_model
 from prompts import OPENER_PROMPT, TAKEAWAY_PROMPT, EDITORIAL_PROMPT
-from datetime import datetime, timezone
 
-
-DISCLAIMER = ("\n\n---\n\n*This newsletter is AI-generated based on articles from your selected sources. Content may contain errors, always verify anything important before acting on it."
-              "\n\nUntil next time 🤖 *")
+DISCLAIMER = "\n\n---\n\n*This newsletter is AI-generated based on articles from your selected sources. Content may contain errors - always verify anything important before acting on it.*"
 
 
 def assemble_newsletter(sections: dict[str, str]) -> str:
@@ -51,11 +48,7 @@ def assemble_newsletter(sections: dict[str, str]) -> str:
     if "<think>" in edited_sections:
         edited_sections = edited_sections.split("</think>")[-1].strip()
 
-    date_str = datetime.now(timezone.utc).strftime("%B %d, %Y")
-
-    newsletter = f"""# Your Personal Newsletter 🤖 {date_str}
-
-{opener}
+    newsletter = f"""{opener}
 
 ---
 

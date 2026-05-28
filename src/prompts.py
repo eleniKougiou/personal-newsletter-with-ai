@@ -19,7 +19,7 @@ ARTICLE_SELECTION_PROMPT = """You are a selective news curator. Below is a list 
 
 Topic description: {interest_description}
 Keywords to prioritize: {keywords}
-Prefer articles published after: {since_date} — but if you cannot determine the date from the title or URL, do not exclude the article on that basis alone.
+Prefer articles published after: {since_date} — dates may appear embedded in the article title or description (e.g. "May 7, 2026Teaching Claude why"). Try to extract the date even if it is not cleanly formatted. If you cannot determine the date, exclude the article.
 
 Your job is to pick the articles most worth reading in full. Be ruthless — only select articles that are genuinely relevant, newsworthy, or insightful for this topic.
 
@@ -65,9 +65,12 @@ SOURCE CREDIBILITY:
 INLINE CITATIONS:
 
 - You MUST cite at least one source per article you reference. This is not optional.
-- Format: hyperlink the relevant phrase and immediately follow it with the source name in italics: [relevant phrase](url) *(Source Name)*
-- The source name should be human-readable and meaningful: "OpenAI blog", "LessWrong post", "MIT Technology Review", "personal blog", etc. — not just the domain.
-- Do not hyperlink everything — only specific claims or pieces of information.
+- Hyperlink a natural phrase within the sentence that represents the specific claim — not a title or label bolted on at the end.
+- The hyperlink should read as part of the sentence. Immediately follow it with the source name in italics.
+- Good: "...models are [surprisingly bad at hiding their intentions](url) *(80,000 Hours Podcast)*"
+- Bad: "...models can't hide their intentions. [Can AIs start rogue deployments?](url) *(80,000 Hours Podcast)*"
+- Never append article titles as separate text after a hyperlink.
+- Do not hyperlink everything — only the specific claim or piece of information that comes from that source.
 - Do not add a separate sources section.
 
 Articles:
@@ -82,12 +85,12 @@ Below are the sections of the latest edition.
 
 Write the opener in two parts:
 
-1. One punchy, specific hook sentence about the single most interesting or surprising thing in this edition. Write it like a friend texting you before you open the newsletter — casual, a little cheeky, no filler. Use plain everyday language — no jargon, no technical terms, nothing that isn't immediately understandable. Do not start with a generic greeting.
+1. One punchy, specific hook sentence about the single most interesting or surprising thing in this edition. Write it like a friend texting you before you open the newsletter — casual, a little cheeky, no filler. Use plain everyday language — no jargon, no technical terms, nothing that isn't immediately understandable. Do not start with a generic greeting. Maximum 20 words.
 
 2. A short "On the menu:" bullet list, one line per topic, each line being a casual one-phrase tease of what's in that section. Use the actual topic names as the label. If all bullets are from the same topic, do not repeat the topic name — just tease the individual stories directly.
 
 Example with multiple topics:
-OpenAI basically admitted their models are learning to game their own safety tests. On the menu:
+Turns out AI models are already trying to cheat on their safety tests. On the menu:
 
 - AI Safety: why alignment might be structurally broken
 - Climate: one promising result buried in bad news
@@ -128,7 +131,8 @@ Below are the raw sections of the latest edition. Your job is to shape them into
 Your tasks:
 
 STRUCTURE & FLOW:
-- Add a short, natural transition at the start of each section (except the first) that bridges from the previous topic. One sentence is enough. Use the actual topic names when referencing them.
+- Add a relevant emoji to each section header (## ) to make it visually scannable — e.g. "## 🛡️ AI Safety & Alignment", "## 🇬🇷 Greece", "## 📈 Markets & Investing". One emoji per header, chosen to match the topic. Preserve the ## formatting exactly, just prepend the emoji.
+- If the section topic is not immediately obvious why it matters to the reader, open the section with one sentence that makes it relevant before diving into the content.
 - Within each section, add concise subheaders where there is a clear topic shift. Keep them short and punchy — not generic ("Background", "Analysis") but specific and interesting ("The catch", "Why this matters", "But wait").
 - End each section with a one-sentence "Why it matters" thought — opinionated, direct, no filler.
 - Keep the overall structure intact: each section should still cover its topic.
@@ -140,10 +144,10 @@ PARAGRAPHS:
 
 FORMATTING:
 - Preserve all markdown links exactly as written. Never remove, rewrite, or strip a hyperlink.
-- Preserve all section headers (## ) exactly as written. Never change header levels or remove them.
+- Preserve all section headers (## ) exactly as written except for adding the emoji prefix described above.
 - Bold key names, claims, numbers, and insights — things a skimmer should catch. Do not bold entire sentences or generic phrases.
 - Use *italics* sparingly for contrast or to highlight a term being introduced.
-- Use emojis as lightweight section or subheader markers where they feel natural (e.g. 🔍, ⚠️, 💡) — one per subheader at most, never mid-sentence, never forced.
+- Use emojis as lightweight subheader markers where they feel natural (e.g. 🔍, ⚠️, 💡) — one per subheader at most, never mid-sentence, never forced.
 - Do not overdo any of the above. Formatting should feel natural, not decorative or noisy.
 
 PULL QUOTES:

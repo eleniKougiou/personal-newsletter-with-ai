@@ -19,7 +19,7 @@ def send_newsletter(content: str):
     date_str = datetime.now(timezone.utc).strftime("%B %d, %Y")
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"Your Personal Newsletter 🤖 {date_str}"
+    msg["Subject"] = f"🗞️ The Brief · {date_str}"
     msg["From"] = sender
     msg["To"] = ", ".join(recipients)
 
@@ -30,11 +30,12 @@ def send_newsletter(content: str):
     <meta charset="utf-8">
     <style>
       body {{ font-family: Georgia, serif; max-width: 680px; margin: 40px auto; color: #222; line-height: 1.7; }}
-      h1 {{ font-size: 1.8em; border-bottom: 2px solid #333; padding-bottom: 8px; }}
       h2 {{ font-size: 1.3em; margin-top: 2em; color: #111; }}
       hr {{ border: none; border-top: 1px solid #ddd; margin: 2em 0; }}
       a {{ color: #1a73e8; }}
       p {{ margin: 0.8em 0; }}
+      blockquote {{ border-left: 3px solid #ddd; margin: 1em 0; padding: 0.5em 1em; color: #555; font-style: italic; }}
+      .footer {{ font-size: 0.8em; color: #999; border-top: 1px solid #eee; margin-top: 2em; padding-top: 1em; }}
     </style>
     </head>
     <body>

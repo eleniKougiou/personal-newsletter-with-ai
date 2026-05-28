@@ -31,17 +31,17 @@ Copy `.env.example` to `.env` and fill in your values:
 
     cp .env.example .env
 
-| Variable | Description |
-|---|---|
-| `LLM_BASE_URL` | Base URL of your LLM provider |
-| `LLM_API_KEY` | Your API key |
-| `LLM_MODEL` | Model name, e.g. `gpt-4o` or `Qwen/Qwen3.5-397B-A17B-FP8` |
-| `EMAIL_SENDER` | Gmail address used to send the newsletter |
-| `EMAIL_SENDER_APP_PASSWORD` | [Gmail App Password](https://support.google.com/accounts/answer/185833) — not your regular password |
-| `EMAIL_RECIPIENT` | Where to send the newsletter. Supports multiple: `a@x.com,b@x.com` |
-| `EMAIL_SMTP_HOST` | SMTP host (default: `smtp.gmail.com`) |
-| `EMAIL_SMTP_PORT` | SMTP port (default: `465`) |
-| `DEV_MODE` | Set to `true` to always fetch articles from the past week, ignoring last run state — useful for testing |
+| Variable | Description                                                                                             |
+|---|---------------------------------------------------------------------------------------------------------|
+| `LLM_BASE_URL` | Base URL of your LLM provider                                                                           |
+| `LLM_API_KEY` | Your API key                                                                                            |
+| `LLM_MODEL` | Model name, e.g. `gpt-4o` or `Qwen/Qwen3.5-397B-A17B-FP8`                                               |
+| `EMAIL_SENDER` | Gmail address used to send the newsletter                                                               |
+| `EMAIL_SENDER_APP_PASSWORD` | [Gmail App Password](https://support.google.com/accounts/answer/185833) - not your regular password     |
+| `EMAIL_RECIPIENT` | Where to send the newsletter. Supports multiple: `a@x.com,b@x.com`                                      |
+| `EMAIL_SMTP_HOST` | SMTP host (default: `smtp.gmail.com`)                                                                   |
+| `EMAIL_SMTP_PORT` | SMTP port (default: `465`)                                                                              |
+| `DEV_MODE` | Set to `true` to always fetch articles from the past week, ignoring last run state - useful for testing |
 
 The project uses the OpenAI Python SDK with a configurable `base_url`. An API key for any provider offering an OpenAI-compatible API will work. [OpenRouter](https://openrouter.ai) is a good starting point if you're unsure.
 

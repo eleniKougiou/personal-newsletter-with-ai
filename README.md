@@ -43,7 +43,7 @@ Copy `.env.example` to `.env` and fill in your values:
 | `EMAIL_SMTP_PORT` | SMTP port (default: `465`)                                                                              |
 | `DEV_MODE` | Set to `true` to always fetch articles from the past week, ignoring last run state - useful for testing |
 
-The project uses the OpenAI Python SDK with a configurable `base_url`. An API key for any provider offering an OpenAI-compatible API will work. [OpenRouter](https://openrouter.ai) is a good starting point if you're unsure.
+The project uses the OpenAI Python SDK with a configurable `base_url`. An API key for any provider offering an OpenAI-compatible API will work.
 
 ---
 
@@ -52,7 +52,7 @@ The project uses the OpenAI Python SDK with a configurable `base_url`. An API ke
 ### Topics and sources
 
 Edit `config/interests.json` to define what you want covered. Each entry is a topic:
-
+```json
     [
       {
         "name": "Science & Technology",
@@ -64,6 +64,7 @@ Edit `config/interests.json` to define what you want covered. Each entry is a to
         ]
       }
     ]
+```
 
 | Field | Description |
 |---|---|
